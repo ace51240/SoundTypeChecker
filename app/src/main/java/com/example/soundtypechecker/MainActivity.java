@@ -40,12 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(this);
 
         spinnerAudioManager = (Spinner) findViewById(R.id.spinner_audiomanager);
-        String[] soundsTypeArray = new String[AudioTypeManager.SoundType.values().length];
-
-        int i = 0;
-        for (AudioTypeManager.SoundType soundType : AudioTypeManager.SoundType.values()) {
-            soundsTypeArray[i++] = getString(soundType.name);
-        }
+        String[] soundsTypeArray = audioTypeManager.getAudioManagerNames();
 
         ArrayAdapter<String> adapterAudioManager = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, soundsTypeArray);
         adapterAudioManager.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -53,12 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         spinnerAudioManager.setOnItemSelectedListener(this);
 
         spinnerAudioAttributes = (Spinner) findViewById(R.id.spinner_audioattributes);
-        String[] audioAttributesArray = new String[AudioTypeManager.AudioAttributesType.values().length];
-
-        i = 0;
-        for (AudioTypeManager.AudioAttributesType audioAttributesType : AudioTypeManager.AudioAttributesType.values()) {
-            audioAttributesArray[i++] = getString(audioAttributesType.name);
-        }
+        String[] audioAttributesArray = audioTypeManager.getAudioAttributesNames();
 
         ArrayAdapter<String> adapterAudioAttributes = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, audioAttributesArray);
         adapterAudioAttributes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

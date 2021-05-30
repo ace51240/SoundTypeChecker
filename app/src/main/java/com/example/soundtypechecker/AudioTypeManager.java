@@ -14,7 +14,7 @@ public class AudioTypeManager {
         this.context = context;
     }
 
-    public enum SoundType {
+    private enum SoundType {
         STREAM_VOICE_CALL(AudioManager.STREAM_VOICE_CALL, R.string.voice_call),
         STREAM_SYSTEM(AudioManager.STREAM_SYSTEM, R.string.system),
         STREAM_RING(AudioManager.STREAM_RING, R.string.ring),
@@ -33,7 +33,7 @@ public class AudioTypeManager {
         }
     }
 
-    public enum AudioAttributesType {
+    private enum AudioAttributesType {
 
         USAGE_MEDIA(AudioAttributes.USAGE_MEDIA, R.string.media),
         USAGE_VOICE_COMMUNICATION(AudioAttributes.USAGE_VOICE_COMMUNICATION, R.string.voice_communication),
@@ -77,5 +77,23 @@ public class AudioTypeManager {
             }
         }
         return 0;
+    }
+
+    public String[] getAudioManagerNames() {
+        String[] soundsTypeArray = new String[SoundType.values().length];
+        int i = 0;
+        for (SoundType soundType : SoundType.values()) {
+            soundsTypeArray[i++] = context.getString(soundType.name);
+        }
+        return soundsTypeArray;
+    }
+
+    public String[] getAudioAttributesNames() {
+        String[] audioAttributesArray = new String[AudioAttributesType.values().length];
+        int i = 0;
+        for (AudioAttributesType audioAttributesType : AudioAttributesType.values()) {
+            audioAttributesArray[i++] = context.getString(audioAttributesType.name);
+        }
+        return audioAttributesArray;
     }
 }
