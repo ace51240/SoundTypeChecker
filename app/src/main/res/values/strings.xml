@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">SoundTypeChecker</string>
+
+    <string name="audio_manager">AudioManager</string>
+    <string name="audio_attributes">AudioAttributes</string>
+
+    <string name="voice_call">VOICE_CALL</string>
+    <string name="system">SYSTEM</string>
+    <string name="ring">RING</string>
+    <string name="music">MUSIC</string>
+    <string name="alarm">ALARM</string>
+    <string name="notification">NOTIFICATION</string>
+    <string name="accessivility">ACCESSIBILITY</string>
+    <string name="dtmf">DTMF</string>
+
+    <string name="media">MEDIA</string>
+    <string name="voice_communication">VOICE_COMMUNICATION</string>
+    <string name="voice_communication_signalling">VOICE_COMMUNICATION_SIGNALLING</string>
+    <string name="notification_ringtone">NOTIFICATION_RINGTONE</string>
+    <string name="notification_communication_request">NOTIFICATION_COMMUNICATION_REQUEST</string>
+    <string name="notification_communication_instant">NOTIFICATION_COMMUNICATION_INSTANT</string>
+    <string name="notification_communication_delayed">NOTIFICATION_COMMUNICATION_DELAYED</string>
+    <string name="notification_event">NOTIFICATION_EVENT</string>
+    <string name="assistance_accessibility">ASSISTANCE_ACCESSIBILITY</string>
+    <string name="assistance_navigation_guidance">ASSISTANCE_NAVIGATION_GUIDANCE</string>
+    <string name="assistance_sonification">ASSISTANCE_SONIFICATION</string>
+    <string name="game">GAME</string>
+    <string name="assistant">ASSISTANT</string>
+
+    <string name="sound">鳴らす</string>
+</resources>
