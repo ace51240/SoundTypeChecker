@@ -79,6 +79,15 @@ public class AudioTypeManager {
         return 0;
     }
 
+    public int[] getAudioManagerTypes() {
+        int[] soundTypeArray = new int[SoundType.values().length];
+        int i = 0;
+        for (SoundType soundType : SoundType.values()) {
+            soundTypeArray[i++] = soundType.type;
+        }
+        return soundTypeArray;
+    }
+
     public String[] getAudioManagerNames() {
         String[] soundsTypeArray = new String[SoundType.values().length];
         int i = 0;
