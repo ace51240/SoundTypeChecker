@@ -9,9 +9,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -62,6 +65,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        LinearLayout ll2 = (LinearLayout) findViewById(R.id.sound_type_name_area);
+        for (int i = 0; i < soundsTypeArray.length; i++) {
+            TextView textView = new TextView(this);
+            textView.setText(soundsTypeArray[i]);
+            ll2.addView(textView);
+        }
+
+        LinearLayout ll = (LinearLayout) findViewById(R.id.volume_bar_area);
+
+        int[] soundTypeArray = audioTypeManager.getAudioManagerTypes();
+        for (int i = 0; i < soundTypeArray.length; i++) {
+            audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            int maxVolume = audioManager.getStreamMaxVolume(i);
+            int curVolume = audioManager.getStreamVolume(i);
+            SeekBar volControl = new SeekBar(this);
+            ll.addView(volControl);
+            volControl.setMax(maxVolume);
+            volControl.setProgress(curVolume);
+            final int audioType = i;
+            volControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onStopTrackingTouch(SeekBar arg0) {
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar arg0) {
+                }
+
+                @Override
+                public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
+                    audioManager.setStreamVolume(audioType, arg1, 0);
+                }
+            });
+        }
     }
 
     @Override
