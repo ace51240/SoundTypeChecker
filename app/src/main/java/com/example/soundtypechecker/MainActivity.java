@@ -150,7 +150,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setupSoundpool(int position) {
         if (isAudioManager) {
             String type = (String) spinnerAudioManager.getItemAtPosition(position);
-            soundPool = new SoundPool(1, audioTypeManager.getAudioManagerType(type), 0);
+            int stream = audioTypeManager.getAudioManagerType(type);
+            soundPool = new SoundPool(1, stream, 0);
             soundId = soundPool.load(context, R.raw.se_saa01, 1);
         } else {
             String type = (String) spinnerAudioAttributes.getItemAtPosition(position);
