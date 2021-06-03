@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -24,12 +23,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SoundPool soundPool;
     private Spinner spinnerAudioManager, spinnerAudioAttributes;
     private AudioTypeManager audioTypeManager;
-    private AudioManager audioManager;
 
     private int soundId;
 
     private boolean isAudioManager = true;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         spinnerAudioAttributes.setEnabled(false);
 
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
         LinearLayout ll2 = (LinearLayout) findViewById(R.id.sound_type_name_area);
         for (int i = 0; i < soundsTypeArray.length; i++) {
             TextView textView = new TextView(this);
@@ -77,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         int[] soundTypeArray = audioTypeManager.getAudioManagerTypes();
         for (int i = 0; i < soundTypeArray.length; i++) {
-            audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             int maxVolume = audioManager.getStreamMaxVolume(i);
             int curVolume = audioManager.getStreamVolume(i);
             SeekBar volControl = new SeekBar(this);
@@ -143,10 +137,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int stream = audioTypeManager.getAudioManagerType(type);
             soundPool = new SoundPool(1, stream, 0);
             soundId = soundPool.load(context, R.raw.se_saa01, 1);
-            int volume = audioManager.getStreamVolume(stream);
-            int volumeMax = audioManager.getStreamMaxVolume(stream);
-
-            setVolumeProgress(volume, volumeMax);
         } else {
             String type = (String) spinnerAudioAttributes.getItemAtPosition(position);
             AudioAttributes attributes = new AudioAttributes.Builder()
@@ -158,10 +148,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .build();
             soundId = soundPool.load(context, R.raw.se_saa01, 1);
         }
-    }
-
-    public void setVolumeProgress(int volume, int volumeMax) {
-        progressBar.setMax(volumeMax);
-        progressBar.setProgress(volume);
     }
 }
