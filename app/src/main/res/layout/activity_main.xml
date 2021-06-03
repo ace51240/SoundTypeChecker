@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <RadioGroup
-        android:id="@+id/radiogroup"
+        android:id="@+id/radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -15,21 +15,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/radio_audiomanager"
+            android:id="@+id/radio_audio_manager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:onClick="onClick"
-            android:text="AudioManager">
+            android:text="@string/audio_manager">
 
         </RadioButton>
 
         <RadioButton
-            android:id="@+id/radio_audioattributes"
+            android:id="@+id/radio_audio_attributes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onClick"
-            android:text="AudioAttributes">
+            android:text="@string/audio_attributes">
 
         </RadioButton>
     </RadioGroup>
@@ -38,7 +38,7 @@
         android:id="@+id/spinner_audiomanager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/radiogroup"
+        app:layout_constraintLeft_toRightOf="@id/radio_group"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        app:layout_constraintLeft_toRightOf="@id/radiogroup"
+        app:layout_constraintLeft_toRightOf="@id/radio_group"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinner_audiomanager" />
 
@@ -58,7 +58,7 @@
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/volume_bar_area"
-        app:layout_constraintTop_toBottomOf="@+id/radiogroup" />
+        app:layout_constraintTop_toBottomOf="@+id/radio_group" />
 
     <LinearLayout
         android:id="@+id/volume_bar_area"
@@ -68,10 +68,10 @@
         android:paddingStart="100dp"
         app:layout_constraintLeft_toRightOf="@id/sound_type_name_area"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radiogroup" />
+        app:layout_constraintTop_toBottomOf="@id/radio_group" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/sound_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="100dp"

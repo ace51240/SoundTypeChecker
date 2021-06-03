@@ -14,7 +14,7 @@ public class AudioTypeManager {
         this.context = context;
     }
 
-    private enum SoundType {
+    private enum AudioManagerType {
         STREAM_VOICE_CALL(AudioManager.STREAM_VOICE_CALL, R.string.voice_call),
         STREAM_SYSTEM(AudioManager.STREAM_SYSTEM, R.string.system),
         STREAM_RING(AudioManager.STREAM_RING, R.string.ring),
@@ -27,7 +27,7 @@ public class AudioTypeManager {
         @StringRes
         int name;
 
-        SoundType(int type, @StringRes int name) {
+        AudioManagerType(int type, @StringRes int name) {
             this.type = type;
             this.name = name;
         }
@@ -62,9 +62,9 @@ public class AudioTypeManager {
     }
 
     public int getAudioManagerType(String s) {
-        for (SoundType soundType : SoundType.values()) {
-            if (context.getString(soundType.name).equals(s)) {
-                return soundType.type;
+        for (AudioManagerType audioManagerType : AudioManagerType.values()) {
+            if (context.getString(audioManagerType.name).equals(s)) {
+                return audioManagerType.type;
             }
         }
         return 0;
@@ -80,19 +80,19 @@ public class AudioTypeManager {
     }
 
     public int[] getAudioManagerTypes() {
-        int[] soundTypeArray = new int[SoundType.values().length];
+        int[] soundTypeArray = new int[AudioManagerType.values().length];
         int i = 0;
-        for (SoundType soundType : SoundType.values()) {
-            soundTypeArray[i++] = soundType.type;
+        for (AudioManagerType audioManagerType : AudioManagerType.values()) {
+            soundTypeArray[i++] = audioManagerType.type;
         }
         return soundTypeArray;
     }
 
     public String[] getAudioManagerNames() {
-        String[] soundsTypeArray = new String[SoundType.values().length];
+        String[] soundsTypeArray = new String[AudioManagerType.values().length];
         int i = 0;
-        for (SoundType soundType : SoundType.values()) {
-            soundsTypeArray[i++] = context.getString(soundType.name);
+        for (AudioManagerType audioManagerType : AudioManagerType.values()) {
+            soundsTypeArray[i++] = context.getString(audioManagerType.name);
         }
         return soundsTypeArray;
     }

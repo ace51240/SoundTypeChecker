@@ -55,13 +55,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         soundPool = new SoundPool(15, AudioManager.STREAM_VOICE_CALL, 0);
         soundId = soundPool.load(context, R.raw.se_saa01, 1);
 
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(this);
+        Button soundButton = (Button) findViewById(R.id.sound_button);
+        soundButton.setOnClickListener(this);
 
         spinnerAudioManager = (Spinner) findViewById(R.id.spinner_audiomanager);
-        String[] soundsTypeArray = audioTypeManager.getAudioManagerNames();
+        String[] audioNameArray = audioTypeManager.getAudioManagerNames();
 
-        ArrayAdapter<String> adapterAudioManager = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, soundsTypeArray);
+        ArrayAdapter<String> adapterAudioManager = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, audioNameArray);
         adapterAudioManager.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAudioManager.setAdapter(adapterAudioManager);
         spinnerAudioManager.setOnItemSelectedListener(this);
@@ -76,14 +76,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         spinnerAudioAttributes.setEnabled(false);
 
-        LinearLayout ll2 = (LinearLayout) findViewById(R.id.sound_type_name_area);
-        for (int i = 0; i < soundsTypeArray.length; i++) {
+        LinearLayout audioNamesArea = (LinearLayout) findViewById(R.id.sound_type_name_area);
+        for (int i = 0; i < audioNameArray.length; i++) {
             TextView textView = new TextView(this);
-            textView.setText(soundsTypeArray[i]);
-            ll2.addView(textView);
+            textView.setText(audioNameArray[i]);
+            audioNamesArea.addView(textView);
         }
 
-        LinearLayout ll = (LinearLayout) findViewById(R.id.volume_bar_area);
+        LinearLayout audioBarArea = (LinearLayout) findViewById(R.id.volume_bar_area);
 
         int[] soundTypeArray = audioTypeManager.getAudioManagerTypes();
         for (int i = 0; i < soundTypeArray.length; i++) {
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int maxVolume = audioManager.getStreamMaxVolume(i);
             int curVolume = audioManager.getStreamVolume(i);
             SeekBar volControl = new SeekBar(this);
-            ll.addView(volControl);
+            audioBarArea.addView(volControl);
             volControl.setMax(maxVolume);
             volControl.setProgress(curVolume);
             final int audioType = i;
@@ -115,21 +115,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button:
+            case R.id.sound_button:
                 soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
                 break;
-            case R.id.radio_audiomanager:
+            case R.id.radio_audio_manager:
                 if (((RadioButton) v).isChecked()) {
                     isAudioManager = true;
-                    setupSoundpool(spinnerAudioManager.getSelectedItemPosition());
+                    setupSoundPool(spinnerAudioManager.getSelectedItemPosition());
                     spinnerAudioManager.setEnabled(true);
                     spinnerAudioAttributes.setEnabled(false);
                 }
                 break;
-            case R.id.radio_audioattributes:
+            case R.id.radio_audio_attributes:
                 if (((RadioButton) v).isChecked()) {
                     isAudioManager = false;
-                    setupSoundpool(spinnerAudioManager.getSelectedItemPosition());
+                    setupSoundPool(spinnerAudioManager.getSelectedItemPosition());
                     spinnerAudioManager.setEnabled(false);
                     spinnerAudioAttributes.setEnabled(true);
                 }
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        setupSoundpool(position);
+        setupSoundPool(position);
     }
 
     @Override
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void setupSoundpool(int position) {
+    public void setupSoundPool(int position) {
         if (isAudioManager) {
             String type = (String) spinnerAudioManager.getItemAtPosition(position);
             int stream = audioTypeManager.getAudioManagerType(type);
