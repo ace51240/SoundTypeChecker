@@ -9,7 +9,6 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -20,7 +19,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, AudioManagerListener.Action, AudioAttributesListener.Action {
 
     private Context context;
     private SoundPool soundPool;
@@ -28,8 +27,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AudioTypeManager audioTypeManager;
 
     private int soundId;
-
-    private boolean isAudioManager = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayAdapter<String> adapterAudioManager = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, audioNameArray);
         adapterAudioManager.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAudioManager.setAdapter(adapterAudioManager);
-        spinnerAudioManager.setOnItemSelectedListener(this);
+        spinnerAudioManager.setOnItemSelectedListener(new AudioManagerListener(this));
 
         spinnerAudioAttributes = (Spinner) findViewById(R.id.spinner_audioattributes);
         String[] audioAttributesArray = audioTypeManager.getAudioAttributesNames();
@@ -72,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayAdapter<String> adapterAudioAttributes = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, audioAttributesArray);
         adapterAudioAttributes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAudioAttributes.setAdapter(adapterAudioAttributes);
-        spinnerAudioAttributes.setOnItemSelectedListener(this);
+        spinnerAudioAttributes.setOnItemSelectedListener(new AudioAttributesListener(this));
 
         spinnerAudioAttributes.setEnabled(false);
 
@@ -120,16 +117,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.radio_audio_manager:
                 if (((RadioButton) v).isChecked()) {
-                    isAudioManager = true;
-                    setupSoundPool(spinnerAudioManager.getSelectedItemPosition());
+                    setAudioManager(spinnerAudioManager.getSelectedItemPosition());
                     spinnerAudioManager.setEnabled(true);
                     spinnerAudioAttributes.setEnabled(false);
                 }
                 break;
             case R.id.radio_audio_attributes:
                 if (((RadioButton) v).isChecked()) {
-                    isAudioManager = false;
-                    setupSoundPool(spinnerAudioManager.getSelectedItemPosition());
+                    setAudioAttributes(spinnerAudioManager.getSelectedItemPosition());
                     spinnerAudioManager.setEnabled(false);
                     spinnerAudioAttributes.setEnabled(true);
                 }
@@ -138,31 +133,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        setupSoundPool(position);
+    public void setAudioManager(int position) {
+        String type = (String) spinnerAudioManager.getItemAtPosition(position);
+        int stream = audioTypeManager.getAudioManagerType(type);
+        soundPool = new SoundPool(1, stream, 0);
+        soundId = soundPool.load(context, R.raw.se_saa01, 1);
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    public void setupSoundPool(int position) {
-        if (isAudioManager) {
-            String type = (String) spinnerAudioManager.getItemAtPosition(position);
-            int stream = audioTypeManager.getAudioManagerType(type);
-            soundPool = new SoundPool(1, stream, 0);
-            soundId = soundPool.load(context, R.raw.se_saa01, 1);
-        } else {
-            String type = (String) spinnerAudioAttributes.getItemAtPosition(position);
-            AudioAttributes attributes = new AudioAttributes.Builder()
-                    .setUsage(audioTypeManager.getAudioAttributeType(type))
-                    .build();
-            soundPool = new SoundPool.Builder()
-                    .setAudioAttributes(attributes)
-                    .setMaxStreams(1)
-                    .build();
-            soundId = soundPool.load(context, R.raw.se_saa01, 1);
-        }
+    public void setAudioAttributes(int position) {
+        String type = (String) spinnerAudioAttributes.getItemAtPosition(position);
+        AudioAttributes attributes = new AudioAttributes.Builder()
+                .setUsage(audioTypeManager.getAudioAttributeType(type))
+                .build();
+        soundPool = new SoundPool.Builder()
+                .setAudioAttributes(attributes)
+                .setMaxStreams(1)
+                .build();
+        soundId = soundPool.load(context, R.raw.se_saa01, 1);
     }
 }
