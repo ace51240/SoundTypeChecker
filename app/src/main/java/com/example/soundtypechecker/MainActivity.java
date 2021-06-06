@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             AudioAttributes attributes = new AudioAttributes.Builder()
                     .setUsage(audioTypeManager.getAudioAttributeType(type))
                     .build();
-            SoundPool soundPool = new SoundPool.Builder()
+            soundPool = new SoundPool.Builder()
                     .setAudioAttributes(attributes)
                     .setMaxStreams(1)
                     .build();
