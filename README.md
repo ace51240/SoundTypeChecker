@@ -20,6 +20,12 @@ https://source.android.google.cn/devices/audio/attributes?hl=ja#compatibility
 - Android 5.0 ~ Android 11.0
     - 手持ちのAndroid 10て動作確認済み
 
+# 実行環境
+以下の環境で実行確認済み
+- Android Studio : 4.2
+- jdk : 1.8.0_291
+- gradle : 6.7.1
+
 ## インストール方法
 - 1. 以下のURLにアクセス
     - https://github.com/ace51240/SoundTypeChecker
