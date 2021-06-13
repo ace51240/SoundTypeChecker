@@ -1,6 +1,5 @@
 package com.example.soundtypechecker;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -8,8 +7,8 @@ public class AudioManagerListener implements AdapterView.OnItemSelectedListener 
 
     Action action = null;
 
-    public AudioManagerListener(Context context) {
-        action = (Action) context;
+    public AudioManagerListener(Action action) {
+        this.action = action;
     }
 
     @Override
