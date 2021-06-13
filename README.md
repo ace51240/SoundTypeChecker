@@ -23,7 +23,7 @@ https://source.android.google.cn/devices/audio/attributes?hl=ja#compatibility
 # 実行環境
 以下の環境で実行確認済み
 - Android Studio : 4.2
-- jdk : 1.8.0_291
+- jdk : 11
 - gradle : 6.7.1
 
 ## インストール方法
